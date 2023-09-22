@@ -4,148 +4,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visor de Webcam con Captura Automática</title>
-  <style>
-/* Estilo para el contenedor de la imagen de fondo */
-#background-image {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; /* Coloca la imagen detrás del contenido principal */
-    background-image: url('wallpaper5.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    opacity: 0.8; /* Ajusta el valor de opacidad según tu preferencia */
-    /* Pseudo-elemento para aplicar el desenfoque */
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    filter: blur(10px); /* Ajusta el valor de desenfoque según tu preferencia */
-}
+    <style>
+        /* Estilo para el contenedor de la imagen de fondo */
+        #background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Coloca la imagen detrás del contenido principal */
+            background-image: url('wallpaper5.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            opacity: 0.8; /* Ajusta el valor de opacidad según tu preferencia */
+            /* Pseudo-elemento para aplicar el desenfoque */
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            filter: blur(10px); /* Ajusta el valor de desenfoque según tu preferencia */
+        }
 
-/* Estilos para pantallas con una altura de 800 píxeles o más */
-@media screen and (min-height: 800px) {
-    #nuevo-contenedor {
-        /* Estilos específicos para resoluciones de 800 píxeles o más */
-        max-width: 100%; /* Ancho máximo del contenedor */
-        margin: 0 auto; /* Centrar el contenedor en la pantalla */
-        padding: 40px; /* Cambiar el espacio interior */
-    }
-       #visor-container {
-        width: 734px; /* Cambiar el ancho del visor */
-        height: 413px; /* Cambiar el alto del visor */
-    }
+        /* Estilo para el contenedor principal */
+        #nuevo-contenedor {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centrar verticalmente */
+            align-items: center; /* Centrar horizontalmente */
+            min-height: 10vh; /* Establecer el alto mínimo del contenedor al 100% de la ventana */
+        }
 
-    /* Otros estilos que desees cambiar para resoluciones más grandes */
-}
+        #contenedor {
+            width: 100%;
+            text-align: center;
+            /* Otros estilos para el contenido aquí */
+        }
 
-/* Estilos para pantallas con una altura menor de 800 píxeles */
-@media screen and (max-height: 799px) {
-    #nuevo-contenedor {
-        /* Estilos específicos para resoluciones menores de 800 píxeles */
-        max-width: 800%; /* Ancho máximo del contenedor */
-        margin: -30px auto 20px auto; /* Ajustar el margen superior e inferior */
-        padding: 20px; /* Restaurar el espacio interior original */
-    }
+        /* Estilo para el body (opcional) */
+        body {
+            margin: 0; /* Elimina el margen predeterminado del body */
+            color: #fff;
+            overflow: auto; /* Permite el scroll cuando sea necesario */
+        }
 
-    #visor-container {
-        width: 560px; /* Restaurar el ancho del visor original */
-        height: 315px; /* Restaurar el alto del visor original */
-    }
+        /* Estilo para el visor */
+        #visor-container {
+            width: 734px; /* Ancho del visor */
+            height: 413px; /* Alto del visor */
+            margin: 0 auto;
+            border: 2px solid #333;
+            position: relative;
+        }
 
-    /* Otros estilos que desees cambiar para resoluciones más pequeñas */
-}
+        #visor {
+            width: 100%;
+            height: 100%;
+        }
 
-    
+        /* Estilo para la galería */
+        #galeria-container {
+            width: 70%; /* Ancho del 70% */
+            margin: 20px auto; /* Margen automático para centrar */
+            text-align: center;
+        }
 
-#contenedor {
-    width: 100%;
-    text-align: center;
+        #galeria-title {
+            font-size: 36px;
+            margin-top: 10px;
+        }
 
-    /* Otros estilos para el contenido aquí */
-}
+        #galeria {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
 
-/* Estilo para el body (opcional) */
-body {
-    margin: 0; /* Elimina el margen predeterminado del body */
-    color: #fff;
-    overflow: auto; /* Permite el scroll cuando sea necesario */
-}
-#visor-container {
-	width: 560px;
-	height: 315px;
-	margin: 0 auto;
-	border: 2px solid #333;
-	position: relative;
-}
+        .imagen-galeria {
+            width: 100px;
+            height: 75px;
+            margin: 5px;
+            border: 1px solid #333;
+            cursor: pointer;
+            transition: transform 0.3s ease; /* Agregar una transición suave para el zoom */
+        }
 
-#visor {
-	width: 100%;
-	height: 100%;
-}
+        .imagen-galeria:hover {
+            transform: scale(2.5); /* Hacer más grande al pasar el mouse */
+        }
 
-#galeria-container {
-	width: 70%; /* Ancho del 70% */
-	margin: 20px auto; /* Margen automático para centrar */
-	text-align: center;
-}
+        .letras-coloridas {
+            background: linear-gradient(to right, #FF5733, #FFBD33, #B6FF33, #33FF77, #338DFF);
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
 
-#galeria-title {
-	font-size: 36px;
-	margin-top: 10px;
-}
+        /* Estilo para botones */
+        button {
+            background-color: #3498db; /* Color de fondo azul */
+            color: #fff; /* Color del texto blanco */
+            border: none; /* Sin borde */
+            border-radius: 5px; /* Bordes redondeados */
+            padding: 10px 20px; /* Espaciado interno para que los botones tengan un tamaño adecuado */
+            cursor: pointer; /* Cursor de puntero al pasar el mouse */
+            transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
+        }
 
-#galeria {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-}
+        /* Estilo para botones al pasar el mouse */
+        button:hover {
+            background-color: #2980b9; /* Color de fondo azul más oscuro al pasar el mouse */
+        }
 
-.imagen-galeria {
-	width: 100px;
-	height: 75px;
-	margin: 5px;
-	border: 1px solid #333;
-	cursor: pointer;
-	transition: transform 0.3s ease; /* Agregar una transición suave para el zoom */
-}
+        /* Estilos para pantallas con una altura menor de 850 píxeles */
+        @media screen and (max-height: 799px) {
+            #nuevo-contenedor {
+                /* Estilos específicos para resoluciones menores de 850 píxeles */
+                max-width: 100%; /* Ancho máximo del contenedor */
+                margin: -30px auto 20px auto; /* Ajustar el margen superior e inferior */
+                padding: 20px; /* Restaurar el espacio interior original */
+            }
 
-.imagen-galeria:hover {
-	transform: scale(2.5); /* Hacer más grande al pasar el mouse */
-}
+            #visor-container {
+                width: 100%; /* Ancho del 100% para ocupar todo el ancho disponible */
+                height: 60vh; /* Establecer el alto en un porcentaje de la altura de la ventana */
+                max-height: calc(100vh - 450px); /* Limitar el alto máximo para dejar espacio para la galería */
+            }
 
-.letras-coloridas {
-	background: linear-gradient(to right, #FF5733, #FFBD33, #B6FF33, #33FF77, #338DFF);
-	-webkit-background-clip: text;
-	color: transparent;
-	display: inline-block;
-}
+            #galeria-container {
+                width: 100%; /* Ancho del 100% para ocupar todo el ancho disponible */
+                max-width: 100%; /* Ancho máximo del 100% */
+                margin: 20px auto; /* Margen automático para centrar */
+                text-align: center;
+            }
 
-/* Estilo para botones */
-button {
-    background-color: #3498db; /* Color de fondo azul */
-    color: #fff; /* Color del texto blanco */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Bordes redondeados */
-    padding: 10px 20px; /* Espaciado interno para que los botones tengan un tamaño adecuado */
-    cursor: pointer; /* Cursor de puntero al pasar el mouse */
-    transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
-}
-
-/* Estilo para botones al pasar el mouse */
-button:hover {
-    background-color: #2980b9; /* Color de fondo azul más oscuro al pasar el mouse */
-}
-
-</style>
+            /* Otros estilos que desees cambiar para resoluciones más pequeñas */
+        }
+    </style>
 </head>
 <body>
- <div id="nuevo-contenedor">
-  <div id="background-image"></div>
+<div id="nuevo-contenedor">
+    <div id="background-image"></div>
     <div id="contenedor">
         <h1 id="logotipo">Flash Photo</h1>
         <div id="visor-container">
@@ -162,107 +162,104 @@ button:hover {
             <div id="galeria"></div>
         </div>
     </div>
-    </div>
-    
-   <script>
-   let currentStream;
-   let autoCaptureInterval; // Variable para almacenar el intervalo de captura automática
+</div>
 
-   // Obtener el elemento de video y solicitar acceso a la cámara web
-   const visor = document.getElementById('visor');
-   const capturarBoton = document.getElementById('capturar');
-   const capturarAuto10Boton = document.getElementById('capturarAuto10');
-   const cambiarCamaraBoton = document.getElementById('cambiarCamara');
-   const galeria = document.getElementById('galeria');
-   const refreshPageButton = document.getElementById('refreshPageButton');
+<script>
+    let currentStream;
+    let autoCaptureInterval; // Variable para almacenar el intervalo de captura automática
 
-   async function iniciarCamara() {
-       try {
-           const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 1920, height: 1080 } });
-           visor.srcObject = stream;
-           currentStream = stream;
-       } catch (error) {
-           console.error('Error al acceder a la cámara: ', error);
-       }
-   }
+    // Obtener el elemento de video y solicitar acceso a la cámara web
+    const visor = document.getElementById('visor');
+    const capturarBoton = document.getElementById('capturar');
+    const capturarAuto10Boton = document.getElementById('capturarAuto10');
+    const cambiarCamaraBoton = document.getElementById('cambiarCamara');
+    const galeria = document.getElementById('galeria');
+    const refreshPageButton = document.getElementById('refreshPageButton');
 
-   // Función para cambiar la cámara
-   async function cambiarCamara() {
-       if (currentStream) {
-           currentStream.getTracks().forEach(track => {
-               track.stop();
-           });
-       }
-       try {
-           const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: 1920, height: 1080 } });
-           visor.srcObject = stream;
-           currentStream = stream;
-       } catch (error) {
-           console.error('Error al cambiar la cámara: ', error);
-       }
-   }
+    async function iniciarCamara() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 1920, height: 1080 } });
+            visor.srcObject = stream;
+            currentStream = stream;
+        } catch (error) {
+            console.error('Error al acceder a la cámara: ', error);
+        }
+    }
 
-   // Función para capturar una imagen con calidad personalizada
-   function capturarImagen() {
-       // Ajustar el tamaño del canvas para la captura en alta resolución
-       const canvas = document.createElement('canvas');
-       canvas.width = 1920; // Resolución deseada
-       canvas.height = 1080; // Resolución deseada
-       const ctx = canvas.getContext('2d');
-       ctx.drawImage(visor, 0, 0, canvas.width, canvas.height);
+    // Función para cambiar la cámara
+    async function cambiarCamara() {
+        if (currentStream) {
+            currentStream.getTracks().forEach(track => {
+                track.stop();
+            });
+        }
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: 1920, height: 1080 } });
+            visor.srcObject = stream;
+            currentStream = stream;
+        } catch (error) {
+            console.error('Error al cambiar la cámara: ', error);
+        }
+    }
 
-       // Convertir la imagen a base64 con calidad personalizada
-       const imagenDataUrl = canvas.toDataURL('image/jpeg', 0.9); // Cambia el valor 0.9 al nivel de calidad deseado (entre 0 y 1)
+    // Función para capturar una imagen con calidad personalizada
+    function capturarImagen() {
+        // Ajustar el tamaño del canvas para la captura en alta resolución
+        const canvas = document.createElement('canvas');
+        canvas.width = 1920; // Resolución deseada
+        canvas.height = 1080; // Resolución deseada
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(visor, 0, 0, canvas.width, canvas.height);
 
-       // Crear una nueva imagen para la galería
-       const nuevaImagen = document.createElement('img');
-       nuevaImagen.src = imagenDataUrl;
-       nuevaImagen.classList.add('imagen-galeria');
+        // Convertir la imagen a base64 con calidad personalizada
+        const imagenDataUrl = canvas.toDataURL('image/jpeg', 0.9); // Cambia el valor 0.9 al nivel de calidad deseado (entre 0 y 1)
 
-       // Agregar la imagen a la galería
-       galeria.appendChild(nuevaImagen);
+        // Crear una nueva imagen para la galería
+        const nuevaImagen = document.createElement('img');
+        nuevaImagen.src = imagenDataUrl;
+        nuevaImagen.classList.add('imagen-galeria');
 
-       // Agregar un evento de clic a la imagen para descargarla al hacer clic
-       nuevaImagen.addEventListener('click', () => {
-           descargarImagen(imagenDataUrl);
-       });
-   }
+        // Agregar la imagen a la galería
+        galeria.appendChild(nuevaImagen);
 
-   // Función para descargar la imagen al hacer clic en la galería
-   function descargarImagen(dataUrl) {
-       const enlaceDescarga = document.createElement('a');
-       enlaceDescarga.href = dataUrl;
-       enlaceDescarga.download = 'captura.png';
-       enlaceDescarga.style.display = 'none';
-       document.body.appendChild(enlaceDescarga);
-       enlaceDescarga.click();
-       document.body.removeChild(enlaceDescarga);
-   }
-// Función para realizar la captura automática 10 veces con un retraso inicial de 3 segundos
-   function capturarAuto10() {
-       setTimeout(function () {
-           for (let i = 0; i < 10; i++) {
-               setTimeout(capturarImagen, i * 3000); // Capturar cada 3 segundos (3000 ms)
-           }
-       }, 3000); // Retraso inicial de 3 segundos (3000 ms)
-   }
+        // Agregar un evento de clic a la imagen para descargarla al hacer clic
+        nuevaImagen.addEventListener('click', () => {
+            descargarImagen(imagenDataUrl);
+        });
+    }
 
-   // Llamar a la función para iniciar la cámara cuando se carga la página
-   window.addEventListener('load', iniciarCamara);
-   
-   
-   
-   
+    // Función para descargar la imagen al hacer clic en la galería
+    function descargarImagen(dataUrl) {
+        const enlaceDescarga = document.createElement('a');
+        enlaceDescarga.href = dataUrl;
+        enlaceDescarga.download = 'captura.png';
+        enlaceDescarga.style.display = 'none';
+        document.body.appendChild(enlaceDescarga);
+        enlaceDescarga.click();
+        document.body.removeChild(enlaceDescarga);
+    }
 
-   // Agregar eventos a los botones
-   capturarBoton.addEventListener('click', capturarImagen);
-   capturarAuto10Boton.addEventListener('click', capturarAuto10);
-   cambiarCamaraBoton.addEventListener('click', cambiarCamara);
+    // Función para realizar la captura automática 10 veces con un retraso inicial de 3 segundos
+    function capturarAuto10() {
+        setTimeout(function () {
+            for (let i = 0; i < 10; i++) {
+                setTimeout(capturarImagen, i * 3000); // Capturar cada 3 segundos (3000 ms)
+            }
+        }, 3000); // Retraso inicial de 3 segundos (3000 ms)
+    }
 
-   // Agregar evento de clic para el botón de recarga
-   refreshPageButton.addEventListener('click', function () {
-       location.reload(); // Recargar la página
-   });
-   </script>
+    // Llamar a la función para iniciar la cámara cuando se carga la página
+    window.addEventListener('load', iniciarCamara);
+
+    // Agregar eventos a los botones
+    capturarBoton.addEventListener('click', capturarImagen);
+    capturarAuto10Boton.addEventListener('click', capturarAuto10);
+    cambiarCamaraBoton.addEventListener('click', cambiarCamara);
+
+    // Agregar evento de clic para el botón de recarga
+    refreshPageButton.addEventListener('click', function () {
+        location.reload(); // Recargar la página
+    });
+</script>
 </body>
 </html>
