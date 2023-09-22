@@ -27,16 +27,40 @@
     filter: blur(10px); /* Ajusta el valor de desenfoque según tu preferencia */
 }
 
-#nuevo-contenedor {
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Centrar verticalmente */
-    align-items: center; /* Centrar horizontalmente */
-    max-width: 800%; /* Ancho máximo del contenedor */
-    margin: -30px auto 20px auto; /* Ajustar el margen superior e inferior */
-    padding: 20px; /* Agregar un espacio interior */
-    box-sizing: border-box; /* Incluir el padding en el ancho máximo */
+/* Estilos para pantallas con una altura de 800 píxeles o más */
+@media screen and (min-height: 800px) {
+    #nuevo-contenedor {
+        /* Estilos específicos para resoluciones de 800 píxeles o más */
+        max-width: 100%; /* Ancho máximo del contenedor */
+        margin: 0 auto; /* Centrar el contenedor en la pantalla */
+        padding: 40px; /* Cambiar el espacio interior */
+    }
+       #visor-container {
+        width: 734px; /* Cambiar el ancho del visor */
+        height: 413px; /* Cambiar el alto del visor */
+    }
+
+    /* Otros estilos que desees cambiar para resoluciones más grandes */
 }
+
+/* Estilos para pantallas con una altura menor de 800 píxeles */
+@media screen and (max-height: 799px) {
+    #nuevo-contenedor {
+        /* Estilos específicos para resoluciones menores de 800 píxeles */
+        max-width: 800%; /* Ancho máximo del contenedor */
+        margin: -30px auto 20px auto; /* Ajustar el margen superior e inferior */
+        padding: 20px; /* Restaurar el espacio interior original */
+    }
+
+    #visor-container {
+        width: 560px; /* Restaurar el ancho del visor original */
+        height: 315px; /* Restaurar el alto del visor original */
+    }
+
+    /* Otros estilos que desees cambiar para resoluciones más pequeñas */
+}
+
+    
 
 #contenedor {
     width: 100%;
