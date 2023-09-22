@@ -27,10 +27,18 @@
     filter: blur(10px); /* Ajusta el valor de desenfoque según tu preferencia */
 }
 
+#nuevo-contenedor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrar verticalmente */
+    align-items: center; /* Centrar horizontalmente */
+    max-width: 800%; /* Ancho máximo del contenedor */
+    margin: 0 auto; /* Centrar el contenedor en la pantalla */
+    padding: 20px; /* Agregar un espacio interior */
+    box-sizing: border-box; /* Incluir el padding en el ancho máximo */
+}
 
 
-
-/* Estilo para el contenido principal en el body */
 #contenedor {
     width: 100%;
     text-align: center;
@@ -44,8 +52,8 @@ body {
     overflow: auto; /* Permite el scroll cuando sea necesario */
 }
 #visor-container {
-	width: 734px;
-	height: 413px;
+	width: 560px;
+	height: 315px;
 	margin: 0 auto;
 	border: 2px solid #333;
 	position: relative;
