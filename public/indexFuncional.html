@@ -163,9 +163,6 @@
         <div id="galeria-container">
             <h2 id="galeria-title" class="letras-coloridas">Galería</h2>
             <div id="galeria"></div>
-            <div id="ventana-modal" style="display: none;">
-             <button id="guardar">Guardar</button> <!-- Botón de Guardar -->
-             </div>
         </div>
     </div>
 </div>
@@ -240,17 +237,6 @@
         });
     }
 
- // Función para guardar la imagen en el disco duro
-    function guardarImagen(dataUrl) {
-        const enlaceDescarga = document.createElement('a');
-        enlaceDescarga.href = dataUrl;
-        enlaceDescarga.download = 'captura.png';
-        enlaceDescarga.style.display = 'none';
-        document.body.appendChild(enlaceDescarga);
-        enlaceDescarga.click();
-        document.body.removeChild(enlaceDescarga);
-    }
-
     // Función para ver la imagen en pantalla completa
     function verImagenPantallaCompleta(imagenDataUrl) {
         const ventanaModal = document.createElement('div');
@@ -261,31 +247,15 @@
         ventanaModal.style.height = '100%';
         ventanaModal.style.background = 'rgba(0, 0, 0, 0.8)';
         ventanaModal.style.display = 'flex';
-        ventanaModal.style.flexDirection = 'column'; // Cambiar a dirección de columna
         ventanaModal.style.justifyContent = 'center';
         ventanaModal.style.alignItems = 'center';
 
         const imagenCompleta = document.createElement('img');
         imagenCompleta.src = imagenDataUrl;
         imagenCompleta.style.maxWidth = '100%';
-        imagenCompleta.style.maxHeight = '80%'; // Reducir la altura máxima para dar espacio al botón
-
-        const botonGuardar = document.createElement('button');
-        botonGuardar.textContent = 'Guardar'; // Texto del botón "Guardar"
-        botonGuardar.style.backgroundColor = '#3498db';
-        botonGuardar.style.color = '#fff';
-        botonGuardar.style.border = 'none';
-        botonGuardar.style.borderRadius = '5px';
-        botonGuardar.style.padding = '10px 20px';
-        botonGuardar.style.cursor = 'pointer';
-        botonGuardar.style.marginTop = '20px'; // Espacio superior para separar del borde inferior
-
-        botonGuardar.addEventListener('click', () => {
-            guardarImagen(imagenDataUrl); // Llama a la función guardarImagen al hacer clic en el botón "Guardar"
-        });
+        imagenCompleta.style.maxHeight = '100%';
 
         ventanaModal.appendChild(imagenCompleta);
-        ventanaModal.appendChild(botonGuardar);
 
         // Agregar un evento de clic para cerrar la ventana modal al hacer clic en la imagen
         imagenCompleta.addEventListener('click', () => {
@@ -296,9 +266,16 @@
         document.body.appendChild(ventanaModal);
     }
 
-  
-
-
+    // Función para descargar la imagen al hacer clic derecho en la galería
+    function descargarImagen(dataUrl) {
+        const enlaceDescarga = document.createElement('a');
+        enlaceDescarga.href = dataUrl;
+        enlaceDescarga.download = 'captura.png';
+        enlaceDescarga.style.display = 'none';
+        document.body.appendChild(enlaceDescarga);
+        enlaceDescarga.click();
+        document.body.removeChild(enlaceDescarga);
+    }
 
     // Función para realizar la captura automática 10 veces con un retraso inicial de 3 segundos
     function capturarAuto10() {
