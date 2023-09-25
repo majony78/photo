@@ -343,19 +343,19 @@
             // La orientación es vertical (retrato)
             if (window.innerWidth <= 575) {
                 // Para pantallas pequeñas (dispositivos móviles en retrato)
-                resolucion = { width: 640, height: 480 };
+                resolucion = { width: 480, height: 640 }; // Invertir ancho y alto para modo retrato
             } else {
                 // Para pantallas más grandes (tabletas en retrato, etc.)
-                resolucion = { width: 1920, height: 1080 };
+                resolucion = { width: 1080, height: 1920 }; // Invertir ancho y alto para modo retrato
             }
         } else {
             // La orientación es horizontal (paisaje)
             if (window.innerWidth <= 575) {
                 // Para pantallas pequeñas (dispositivos móviles en paisaje)
-                resolucion = { width: 1280, height: 720 };
+                resolucion = { width: 720, height: 1280 }; // Resolución estándar en modo paisaje
             } else {
                 // Para pantallas más grandes (tabletas en paisaje, etc.)
-                resolucion = { width: 1920, height: 1080 };
+                resolucion = { width: 1080, height: 1920 }; // Resolución estándar en modo paisaje
             }
         }
 
@@ -374,7 +374,6 @@
     window.addEventListener('load', ajustarResolucion);
     window.addEventListener('orientationchange', ajustarResolucion);
 
-  
 
 
 
