@@ -332,6 +332,41 @@
         // Agregar la ventana modal al body
         document.body.appendChild(ventanaModal);
     }
+    
+ // Función para ajustar la resolución de la cámara en función de la orientación
+    function ajustarResolucion() {
+        const anchoPantalla = window.screen.width;
+        const altoPantalla = window.screen.height;
+        let resolucion;
+
+        if (window.innerWidth < window.innerHeight) {
+            // La orientación es vertical, ajusta la resolución en consecuencia
+            if (anchoPantalla > 1080) {
+                // Usar una resolución más baja si la pantalla es grande
+                resolucion = { width: 640, height: 480 };
+            } else {
+                resolucion = { width: 1920, height: 1080 };
+            }
+        } else {
+            // La orientación es horizontal, usa la resolución predeterminada
+            resolucion = { width: 1920, height: 1080 };
+        }
+
+        // Detén la cámara actual si está en uso
+        if (currentStream) {
+            currentStream.getTracks().forEach(track => {
+                track.stop();
+            });
+        }
+
+        // Inicia la cámara con la nueva resolución
+        iniciarCamara(resolucion);
+    }
+
+    // Llama a la función para ajustar la resolución cuando se carga la página y cuando se cambia la orientación
+    window.addEventListener('load', ajustarResolucion);
+    window.addEventListener('orientationchange', ajustarResolucion);
+
 
   
 
