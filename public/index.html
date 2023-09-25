@@ -166,7 +166,7 @@
         }
 
         /* Estilos para pantallas pequeñas (móviles) */
-        @media screen and (max-width: 575px) {
+        @media screen and (max-width: 575px) and (orientation: portrait) {
             #logotipo-imagen {
                 width: 120px; /* Ajusta el ancho deseado para pantallas pequeñas */
             }
@@ -179,6 +179,8 @@
             border: 2px solid #333;
             position: relative;
         }
+        
+        
         }
     </style>
 </head>
@@ -220,14 +222,26 @@
     const refreshPageButton = document.getElementById('refreshPageButton');
 
     async function iniciarCamara() {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 1920, height: 1080 } });
-            visor.srcObject = stream;
-            currentStream = stream;
-        } catch (error) {
-            console.error('Error al acceder a la cámara: ', error);
-        }
-    }
+	    try {
+	        let resolucion;
+
+	        // Verifica si la pantalla es de un dispositivo móvil en modo retrato
+	        if (window.innerWidth < window.innerHeight && window.innerWidth <= 575) {
+	            // Dispositivo móvil en modo retrato
+	            resolucion = { width: 480, height: 640 }; // Resolución para dispositivos móviles en modo retrato
+	        } else {
+	            // Pantalla de ordenador u otros casos
+	            resolucion = { width: 1920, height: 1080 }; // Resolución de 1080p
+	        }
+
+	        const stream = await navigator.mediaDevices.getUserMedia({ video: resolucion });
+	        visor.srcObject = stream;
+	        currentStream = stream;
+	    } catch (error) {
+	        console.error('Error al acceder a la cámara: ', error);
+	    }
+	}
+
 
     // Función para cambiar la cámara
     async function cambiarCamara() {
@@ -333,46 +347,6 @@
         document.body.appendChild(ventanaModal);
     }
     
- // Función para ajustar la resolución de la cámara en función de la orientación y el tamaño de pantalla
-    function ajustarResolucion() {
-        const anchoPantalla = window.innerWidth;
-        const altoPantalla = window.innerHeight;
-        let resolucion;
-
-        if (window.innerWidth < window.innerHeight) {
-            // La orientación es vertical (retrato)
-            if (window.innerWidth <= 575) {
-                // Para pantallas pequeñas (dispositivos móviles en retrato)
-                resolucion = { width: 480, height: 640 }; // Invertir ancho y alto para modo retrato
-            } else {
-                // Para pantallas más grandes (tabletas en retrato, etc.)
-                resolucion = { width: 1080, height: 1920 }; // Invertir ancho y alto para modo retrato
-            }
-        } else {
-            // La orientación es horizontal (paisaje)
-            if (window.innerWidth <= 575) {
-                // Para pantallas pequeñas (dispositivos móviles en paisaje)
-                resolucion = { width: 720, height: 1280 }; // Resolución estándar en modo paisaje
-            } else {
-                // Para pantallas más grandes (tabletas en paisaje, etc.)
-                resolucion = { width: 1080, height: 1920 }; // Resolución estándar en modo paisaje
-            }
-        }
-
-        // Detén la cámara actual si está en uso
-        if (currentStream) {
-            currentStream.getTracks().forEach(track => {
-                track.stop();
-            });
-        }
-
-        // Inicia la cámara con la nueva resolución
-        iniciarCamara(resolucion);
-    }
-
-    // Llama a la función para ajustar la resolución cuando se carga la página y cuando se cambia la orientación
-    window.addEventListener('load', ajustarResolucion);
-    window.addEventListener('orientationchange', ajustarResolucion);
 
 
 
