@@ -333,23 +333,30 @@
         document.body.appendChild(ventanaModal);
     }
     
- // Función para ajustar la resolución de la cámara en función de la orientación
+ // Función para ajustar la resolución de la cámara en función de la orientación y el tamaño de pantalla
     function ajustarResolucion() {
-        const anchoPantalla = window.screen.width;
-        const altoPantalla = window.screen.height;
+        const anchoPantalla = window.innerWidth;
+        const altoPantalla = window.innerHeight;
         let resolucion;
 
         if (window.innerWidth < window.innerHeight) {
-            // La orientación es vertical, ajusta la resolución en consecuencia
-            if (anchoPantalla > 1080) {
-                // Usar una resolución más baja si la pantalla es grande
+            // La orientación es vertical (retrato)
+            if (window.innerWidth <= 575) {
+                // Para pantallas pequeñas (dispositivos móviles en retrato)
                 resolucion = { width: 640, height: 480 };
             } else {
+                // Para pantallas más grandes (tabletas en retrato, etc.)
                 resolucion = { width: 1920, height: 1080 };
             }
         } else {
-            // La orientación es horizontal, usa la resolución predeterminada
-            resolucion = { width: 1920, height: 1080 };
+            // La orientación es horizontal (paisaje)
+            if (window.innerWidth <= 575) {
+                // Para pantallas pequeñas (dispositivos móviles en paisaje)
+                resolucion = { width: 1280, height: 720 };
+            } else {
+                // Para pantallas más grandes (tabletas en paisaje, etc.)
+                resolucion = { width: 1920, height: 1080 };
+            }
         }
 
         // Detén la cámara actual si está en uso
@@ -366,7 +373,6 @@
     // Llama a la función para ajustar la resolución cuando se carga la página y cuando se cambia la orientación
     window.addEventListener('load', ajustarResolucion);
     window.addEventListener('orientationchange', ajustarResolucion);
-
 
   
 
