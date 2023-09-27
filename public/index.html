@@ -259,12 +259,21 @@
         }
     }
 
-    // Función para capturar una imagen con calidad personalizada
+ // Función para capturar una imagen con calidad personalizada y resolución ajustada
     function capturarImagen() {
         // Ajustar el tamaño del canvas para la captura en alta resolución
         const canvas = document.createElement('canvas');
-        canvas.width = 1920; // Resolución deseada
-        canvas.height = 1080; // Resolución deseada
+        let resolucion;
+
+        // Verificar el tamaño de la pantalla y ajustar la resolución en consecuencia
+        if (window.innerWidth <= 575) {
+            resolucion = { width: 480, height: 640 }; // Resolución para dispositivos móviles en modo retrato
+        } else {
+            resolucion = { width: 1920, height: 1080 }; // Resolución de 1080p para pantallas grandes
+        }
+
+        canvas.width = resolucion.width;
+        canvas.height = resolucion.height;
         const ctx = canvas.getContext('2d');
         ctx.drawImage(visor, 0, 0, canvas.width, canvas.height);
 
@@ -290,6 +299,7 @@
             descargarImagen(imagenDataUrl);
         });
     }
+
 
  // Función para guardar la imagen en el disco duro
     function guardarImagen(dataUrl) {
