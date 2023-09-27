@@ -259,14 +259,19 @@
         }
     }
 
-    // Función para capturar una imagen con calidad personalizada
+ // Función para capturar una imagen con calidad personalizada y relación de aspecto 4:3
     function capturarImagen() {
-        // Ajustar el tamaño del canvas para la captura en alta resolución
+        // Ajustar el tamaño del canvas para la captura en alta resolución y relación 4:3
         const canvas = document.createElement('canvas');
-        canvas.width = 1920; // Resolución deseada
-        canvas.height = 1080; // Resolución deseada
+        canvas.width = 1920; // Ancho deseado
+        canvas.height = 1440; // Alto deseado (4:3)
         const ctx = canvas.getContext('2d');
-        ctx.drawImage(visor, 0, 0, canvas.width, canvas.height);
+
+        // Calcular el recorte necesario para mantener la relación 4:3
+        const recorteX = (visor.videoWidth - canvas.width) / 2;
+        const recorteY = (visor.videoHeight - canvas.height) / 2;
+
+        ctx.drawImage(visor, recorteX, recorteY, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
 
         // Convertir la imagen a base64 con calidad personalizada
         const imagenDataUrl = canvas.toDataURL('image/jpeg', 0.9); // Cambia el valor 0.9 al nivel de calidad deseado (entre 0 y 1)
@@ -290,6 +295,7 @@
             descargarImagen(imagenDataUrl);
         });
     }
+
 
  // Función para guardar la imagen en el disco duro
     function guardarImagen(dataUrl) {
